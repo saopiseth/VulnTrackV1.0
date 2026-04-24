@@ -10,6 +10,7 @@ use App\Http\Controllers\SlaPolicyController;
 use App\Http\Controllers\UserGroupController;
 use App\Http\Controllers\VulnerabilityController;
 use App\Http\Controllers\VulnAssessmentController;
+use App\Http\Controllers\Api\FindingApiController;
 
 // ─── Redirect root to login ───────────────────────────────────
 Route::get('/', fn() => redirect()->route('login'));
@@ -79,6 +80,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/vuln-assessments/{vulnAssessment}/report/word',            [VulnAssessmentController::class, 'reportWord'])->name('vuln-assessments.report.word');
     Route::get('/vuln-assessments/{vulnAssessment}/report/excel',           [VulnAssessmentController::class, 'reportExcel'])->name('vuln-assessments.report.excel');
 
+
+    // Findings list (infinite scroll page)
+    Route::get('/findings', fn() => view('findings.index'))->name('findings.index');
+
+    // Findings JSON API (session-auth, consumed by findings page)
+    Route::prefix('api')->name('api.')->group(function () {
+        Route::get('/findings',       [FindingApiController::class, 'index'])->name('findings.index');
+        Route::get('/findings/{finding}', [FindingApiController::class, 'show'])->name('findings.show');
+    });
 
     // Account
     Route::get('/account/profile',           [AccountController::class, 'profile'])->name('account.profile');
