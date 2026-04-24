@@ -246,6 +246,11 @@
                         <i class="bi bi-stopwatch-fill"></i> SLA Policies
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('findings.index') }}" class="{{ request()->routeIs('findings.index') ? 'active' : '' }}">
+                        <i class="bi bi-list-ul"></i> Findings List
+                    </a>
+                </li>
             </ul>
 
             <div class="sidebar-label mt-2">Account</div>
